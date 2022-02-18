@@ -66,7 +66,7 @@ try:
     os.mkdir(pasta)
     erros = 0
 except:
-    errocnt = 1
+    erros = 1
     print('ERRO!')
 if erros == 0:
     os.chdir(pasta)

@@ -10,7 +10,7 @@ import os
 
 def charcheck(txt):
     """
-    Analisa se existe caracteres especiais que não podem ser utilizados em nome de pastas
+    Analisa se existe caracteres especiais que não podem ser utilizados em nome de pastas.
     
     """
     while True:

@@ -11,10 +11,12 @@ from threading import local
 6 - Criação de template de organização de pastas
 7 - Edição do template'''
 
-# Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas.
+''' Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas
+e caso tenha solicita ao usuário um novo nome e o retorna.'''
 def charcheck(txt):
     """
-    Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas.
+    Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas
+    e caso tenha solicita um novo nome e o retorna.
     
     """
     while True:
@@ -47,32 +49,38 @@ def caminho():
 
 # Nome a ser designado para a nova pasta
 while True:
-    projeto = str(input('Nome do pasta: '))
-    pasta = charcheck(projeto)
-    confirma = str(input(f'Nome do projeto: {pasta}. Confirme [S/N] '))[0].upper()
     while True:
-        if confirma not in 'SsNn':
-            print('OPÇÃO INVÁLIDA! Tente novamente!')
-            confirma = str(input(f'Nome do projeto: {pasta}. Confirme [S/N] '))[0].upper()
-        elif confirma in 'SsNn':
+        projeto = str(input('Nome do pasta: '))
+        pasta = charcheck(projeto)
+        confirma = str(input(f'Nome do projeto: {pasta}. Confirme [S/N] '))[0].upper()
+        while True:
+            if confirma not in 'SsNn':
+                print('OPÇÃO INVÁLIDA! Tente novamente!')
+                confirma = str(input(f'Nome do projeto: {pasta}. Confirme [S/N] '))[0].upper()
+            elif confirma in 'SsNn':
+                break
+        if confirma in 'Ss':
             break
-    if confirma in 'Ss':
-        break
 
-caminho()
+    caminho()
 
 # Criação das pastas e subpastas
-try:
-    os.mkdir(pasta)
-    erros = 0
-except:
-    erros = 1
-    print('ERRO!')
-if erros == 0:
-    os.chdir(pasta)
-    qntsub = int(input('Quantas subastas deseja criar? '))
-    for c in range(1, qntsub + 1):
-        try:
-            os.mkdir(pasta + ' ' + str(c))
-        except:
-            print('ERRO!')
+    try:
+        os.mkdir(pasta)
+        erros = 0
+    except:
+        erros = 1
+        print('Não foi possível criar sua pasta. Verifique se já não existe uma pasta com mesmo nome. \n \n')
+    if erros == 0:
+        os.chdir(pasta)
+        subpastas = []
+        qntsub = int(input('Quantas subastas deseja criar? '))
+        for c in range(1, qntsub + 1):
+            subpastas.append(str(input(f'Nome da {c}ª subpasta: ')))
+            subpastas[c-1] = charcheck(subpastas[c-1])
+        for c in range(1, qntsub + 1):
+            try:
+                os.mkdir(subpastas[c-1])
+            except:
+                print('ERRO!')
+        break

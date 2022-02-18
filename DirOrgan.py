@@ -1,3 +1,4 @@
+from itertools import count
 import os
 
 '''
@@ -10,38 +11,24 @@ import os
 
 def charcheck(txt):
     """
-    Analisa se existe caracteres especiais que não podem ser utilizados em nome de pastas.
+    Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas.
     
     """
     while True:
-        if '?' in txt:
+        cont = 0
+        for c in range(0, len(txt)):
+            if txt[c] in '?/\:<>*|':
+                cont += 1
+        if cont >= 1:
             print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = input(str('Nome do projeto: '))
-        elif '/' in txt:
-            print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = input(str('Nome do projeto: '))
-        elif ':' in txt:
-            print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = input(str('Nome do projeto: '))
-        elif '<' in txt:
-            print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = input(str('Nome do projeto: '))
-        elif '>' in txt:
-            print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = input(str('Nome do projeto: '))
-        elif '*' in txt:
-            print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = input(str('Nome do projeto: '))
-        elif '|' in txt:
-            print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = input(str('Nome do projeto: '))
+            txt = input(str('Nome da pasta: '))
         else:
             break
-    return txt
+    return txt    
 
 # Nome a ser designado para a nova pasta
 while True:
-    projeto = input(str('Nome do projeto: '))
+    projeto = input(str('Nome do pasta: '))
     pasta = charcheck(projeto)
     confirma = input(str(f'Nome do projeto: {pasta}. Confirme [S/N] '))[0].upper()
     while True:

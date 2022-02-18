@@ -64,9 +64,15 @@ caminho()
 # Criação das pastas e subpastas
 try:
     os.mkdir(pasta)
+    errocnt = 0
 except:
+    errocnt = 1
     print('ERRO!')
-os.chdir(pasta)
-qntsub = int(input('Quantas subastas deseja criar? '))
-for c in range(1, qntsub + 1):
-    os.mkdir(pasta + ' ' + str(c))
+if errocnt == 0:
+    os.chdir(pasta)
+    qntsub = int(input('Quantas subastas deseja criar? '))
+    for c in range(1, qntsub + 1):
+        try:
+            os.mkdir(pasta + ' ' + str(c))
+        except:
+            print('ERRO!')

@@ -1,6 +1,4 @@
-from itertools import count
 import os
-from threading import local
 
 '''
 1 - Nome da pasta a ser criada
@@ -9,7 +7,8 @@ from threading import local
 4 - Criação das Subpastas
 5 - Separação dos arquivos por tipo
 6 - Criação de template de organização de pastas
-7 - Edição do template'''
+7 - Edição do template
+'''
 
 ''' Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas
 e caso tenha solicita ao usuário um novo nome e o retorna.'''
@@ -74,7 +73,12 @@ while True:
     if erros == 0:
         os.chdir(pasta)
         subpastas = []
-        qntsub = int(input('Quantas subastas deseja criar? '))
+        while True:
+            try:
+                qntsub = int(input('Quantas subastas deseja criar? '))
+                break
+            except:
+                print('Digite um número inteiro!')
         for c in range(1, qntsub + 1):
             subpastas.append(str(input(f'Nome da {c}ª subpasta: ')))
             subpastas[c-1] = charcheck(subpastas[c-1])
@@ -84,3 +88,4 @@ while True:
             except:
                 print('ERRO!')
         break
+os.walk()

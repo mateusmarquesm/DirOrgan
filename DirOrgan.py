@@ -1,6 +1,4 @@
-from cgitb import text
 import os
-from sqlite3 import Row
 from tkinter import *
 from tkinter import filedialog
 

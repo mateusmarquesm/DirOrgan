@@ -1,4 +1,9 @@
+from cgitb import text
 import os
+from sqlite3 import Row
+from tkinter import *
+from tkinter import filedialog
+
 
 '''
 1 - Nome da pasta a ser criada
@@ -10,82 +15,43 @@ import os
 7 - Edição do template
 '''
 
-''' Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas
-e caso tenha solicita ao usuário um novo nome e o retorna.'''
-def charcheck(txt):
-    """
-    Analisa se existe caracteres especiais que não podem ser utilizados em nomes de pastas
-    e caso tenha solicita um novo nome e o retorna.
-    
-    """
-    while True:
-        cont = 0
-        for c in range(0, len(txt)):
-            if txt[c] in '?/\:<>*|':
-                cont += 1
-        if cont >= 1:
-            print('Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|')
-            txt = str(input('Nome da pasta: '))
-        else:
-            break
-    return txt    
-
-
-# Requisita o local onde será criada a pasta e analisa se é um local válido.
-def caminho():
-    """
-    Requisita o local onde será criada a pasta e analisa se é um local válido.
-    
-    """
-    while True:
-        local = str(input('Local de criação da pasta: '))
-        if os.path.isdir(local):
-            break
-        else:
-            print('Caminho inválido! Tente novamente.')
-    os.chdir(local)
-
-
-# Nome a ser designado para a nova pasta
-while True:
-    while True:
-        projeto = str(input('Nome do pasta: '))
-        pasta = charcheck(projeto)
-        confirma = str(input(f'Nome do projeto: {pasta}. Confirme [S/N] '))[0].upper()
-        while True:
-            if confirma not in 'SsNn':
-                print('OPÇÃO INVÁLIDA! Tente novamente!')
-                confirma = str(input(f'Nome do projeto: {pasta}. Confirme [S/N] '))[0].upper()
-            elif confirma in 'SsNn':
-                break
-        if confirma in 'Ss':
-            break
-
-    caminho()
-
-# Criação das pastas e subpastas
-    try:
+def criar_pasta():
+    caminho = filedialog.askdirectory()
+    os.chdir(caminho)
+    pasta = entrada.get()
+    try: 
         os.mkdir(pasta)
-        erros = 0
+        flag = 0
+        subpastas()
     except:
-        erros = 1
-        print('Não foi possível criar sua pasta. Verifique se já não existe uma pasta com mesmo nome. \n \n')
-    if erros == 0:
-        os.chdir(pasta)
-        subpastas = []
-        while True:
-            try:
-                qntsub = int(input('Quantas subastas deseja criar? '))
-                break
-            except:
-                print('Digite um número inteiro!')
-        for c in range(1, qntsub + 1):
-            subpastas.append(str(input(f'Nome da {c}ª subpasta: ')))
-            subpastas[c-1] = charcheck(subpastas[c-1])
-        for c in range(1, qntsub + 1):
-            try:
-                os.mkdir(subpastas[c-1])
-            except:
-                print('ERRO!')
-        break
-os.walk()
+        flag = 1
+    if flag == 1:
+        if pasta == '':
+            msgErro = Label(janelaInicial, text='Digite o nome da pasta', font=('Lucida Console',11), bg='#212121', fg='red', padx=5, pady=5)
+            msgErro.pack()
+        else:
+            msgErro = Label(janelaInicial, text='Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|', font=('Lucida Console',11), bg='#212121', fg='red', padx=5, pady=5)
+            msgErro.pack()
+
+def subpastas():
+    janelaSubpastas = Tk()
+    janelaSubpastas.title('DirOrgan') #Define o nome da janela
+    janelaSubpastas.config(background='#212121') #Define cor de fundo
+
+    janelaInicial.destroy()
+
+janelaInicial = Tk()
+janelaInicial.config(background='#212121') #Define cor de fundo
+janelaInicial.title('DirOrgan') #Define o nome da janela
+
+Label(janelaInicial, text='Bem vindo ao DirOrgan', font=('Lucida Console',13), bg='#212121', fg='#00ff1e', padx=20, pady=20).pack() #Msg de boas vindas
+Label(janelaInicial, text='Selecione o local de criação da nova pasta', font=('Lucida Console',11), bg='#212121', fg='#00ff1e', padx=5, pady=5).pack() #Msg Instruções
+painel = Frame(janelaInicial, bg='#212121') 
+painel.pack(padx=15, pady=10)
+Label(painel, text='Nome da pasta: ', font=('Lucida Console',11), bg='#212121', fg='#00ff1e', padx=5, pady=5).pack(side=LEFT)
+entrada = Entry(painel, width=30, borderwidth=1, relief=SUNKEN)
+entrada.pack(side=LEFT, pady=5)
+Button(painel, text='Procurar', command=criar_pasta).pack(side=LEFT, padx=10)
+
+
+janelaInicial.mainloop()

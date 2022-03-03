@@ -13,10 +13,6 @@ from tkinter import filedialog
 7 - Edição do template
 '''
 
-def sN(txt):
-    global confirma
-    confirma = txt
-
 def confirma():
     global telaConfirma
     global pasta

@@ -37,7 +37,6 @@ def caminho_pasta():
     
 def cria_pasta():
     global telaConfirma
-    telaConfirma.destroy()
     try: 
         os.mkdir(pasta)
         flag = 0
@@ -46,10 +45,20 @@ def cria_pasta():
         flag = 1
     if flag == 1:
         if pasta == '':
-            msgErro = ttk.Label(janelaInicial, text='Digite o nome da pasta', style='ERROR.TLabel')
-            msgErro.pack()
+            telaConfirma.destroy()
+            erro01 = Toplevel()
+            erro01.title('DirOrgan')
+            erro01.config(background='#212121')
+            msgErro = ttk.Label(erro01, text='Digite o nome da pasta', style='ERROR.TLabel')
+            msgErro.pack(padx=5, pady=10)
+            Button(erro01, text='OK', command=erro01.destroy).pack(pady=10)
         else:
-            msgErro = ttk.Label(janelaInicial, text='Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|', style='ERROR.TLabel')
+            telaConfirma.destroy()
+            erro02 = Toplevel()
+            erro02.title('DirOrgan')
+            erro02.config(background='#212121')
+            msgErro = ttk.Label(erro02, text='Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|', style='ERROR.TLabel')
+            Button(erro02, text='OK', command=erro02.destroy).pack(pady=10, side=BOTTOM)
             msgErro.pack(padx=5, pady=5)
 
 
@@ -74,6 +83,5 @@ ttk.Label(painel, text='Nome da pasta:', style='Dark.TLabel').pack(side=LEFT)
 entrada = Entry(painel, width=30, borderwidth=1, relief=SUNKEN)
 entrada.pack(side=LEFT, pady=5)
 Button(painel, text='Procurar', command=caminho_pasta).pack(side=LEFT, padx=10)
-
 
 janelaInicial.mainloop()

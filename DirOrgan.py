@@ -38,6 +38,7 @@ def cria_pasta():
     global telaConfirma
     try: 
         os.mkdir(pasta)
+        os.chdir(pasta)
         flag = 0
         janela_subpastas()
     except:
@@ -61,9 +62,27 @@ def cria_pasta():
             msgErro.pack(padx=5, pady=5)
 
 def cria_subpasta():
-    pass
+    subpasta = entrada2.get()
+    try:
+        os.mkdir(subpasta)
+    except:
+        if subpasta == '':
+            erro01 = Toplevel()
+            erro01.title('DirOrgan')
+            erro01.config(background='#212121')
+            msgErro = ttk.Label(erro01, text='Digite o nome da pasta', style='ERROR.TLabel')
+            msgErro.pack(padx=5, pady=10)
+            Button(erro01, text='OK', command=erro01.destroy).pack(pady=10)
+        else:
+            erro02 = Toplevel()
+            erro02.title('DirOrgan')
+            erro02.config(background='#212121')
+            msgErro = ttk.Label(erro02, text='Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|', style='ERROR.TLabel')
+            Button(erro02, text='OK', command=erro02.destroy).pack(pady=10, side=BOTTOM)
+            msgErro.pack(padx=5, pady=5)
 
 def janela_subpastas():
+    global entrada2
     janelaInicial.destroy()
     janelaSubpastas = Tk()
     janelaSubpastas.title('DirOrgan') #Define o nome da janela
@@ -80,7 +99,7 @@ def janela_subpastas():
     ttk.Label(painel2, text='Nome da subpasta:', style='Dark.TLabel').pack(side=LEFT)
     entrada2 = Entry(painel2, width=30, relief=SUNKEN)
     entrada2.pack(side=LEFT, pady=5)
-    Button(painel2, text='Criar', command=cria_subpasta).pack(side=LEFT, padx=10)
+    Button(painel2, text='Nova pasta', command=cria_subpasta).pack(side=LEFT, padx=10)
 
 janelaInicial = Tk()
 janelaInicial.config(background='#212121') #Define cor de fundo

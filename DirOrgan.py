@@ -1,9 +1,8 @@
-from ctypes import alignment
 import os
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
-from tkinter import font
+
 
 
 '''
@@ -61,16 +60,33 @@ def cria_pasta():
             Button(erro02, text='OK', command=erro02.destroy).pack(pady=10, side=BOTTOM)
             msgErro.pack(padx=5, pady=5)
 
+def cria_subpasta():
+    pass
 
 def janela_subpastas():
+    janelaInicial.destroy()
     janelaSubpastas = Tk()
     janelaSubpastas.title('DirOrgan') #Define o nome da janela
     janelaSubpastas.config(background='#212121') #Define cor de fundo
-    janelaInicial.destroy()
+    
+    #Estilo das Labels
+    style = ttk.Style()
+    style.configure('Dark.TLabel', font=('Lucida Console', 11), background='#212121', foreground='#00ff1e')
+    style.configure('ERROR.TLabel', font=('Lucida Console', 11), background='#212121', foreground='red', justify=CENTER)    
+    
+    ttk.Label(janelaSubpastas, text='Crie suas subpastas:', style='Dark.TLabel').pack()
+    painel2 = Frame(janelaSubpastas, bg='#212121')
+    painel2.pack(padx=10, pady=10)
+    ttk.Label(painel2, text='Nome da subpasta:', style='Dark.TLabel').pack(side=LEFT)
+    entrada2 = Entry(painel2, width=30, relief=SUNKEN)
+    entrada2.pack(side=LEFT, pady=5)
+    Button(painel2, text='Criar', command=cria_subpasta).pack(side=LEFT, padx=10)
 
 janelaInicial = Tk()
 janelaInicial.config(background='#212121') #Define cor de fundo
 janelaInicial.title('DirOrgan') #Define o nome da janela
+
+#Estilo das Labels
 style = ttk.Style()
 style.configure('Dark.TLabel', font=('Lucida Console', 11), background='#212121', foreground='#00ff1e')
 style.configure('ERROR.TLabel', font=('Lucida Console', 11), background='#212121', foreground='red', justify=CENTER)
@@ -80,7 +96,7 @@ ttk.Label(janelaInicial, text='Selecione o local de criação da nova pasta', st
 painel = Frame(janelaInicial, bg='#212121') 
 painel.pack(padx=10, pady=10)
 ttk.Label(painel, text='Nome da pasta:', style='Dark.TLabel').pack(side=LEFT)
-entrada = Entry(painel, width=30, borderwidth=1, relief=SUNKEN)
+entrada = Entry(painel, width=30, borderwidth=1, relief=SUNKEN) #Esoaço para usuário inserir o nome da pasta do seu projeto
 entrada.pack(side=LEFT, pady=5)
 Button(painel, text='Procurar', command=caminho_pasta).pack(side=LEFT, padx=10)
 

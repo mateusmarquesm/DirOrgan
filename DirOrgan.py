@@ -1,6 +1,9 @@
+from ctypes import alignment
 import os
 from tkinter import *
 from tkinter import filedialog
+from tkinter import ttk
+from tkinter import font
 
 
 '''
@@ -19,13 +22,11 @@ def confirma():
     telaConfirma = Toplevel()
     telaConfirma.title('DirOrgan')
     telaConfirma.config(background='#212121')
-    Label(telaConfirma, text=f'Confirme o nome da pasta: {pasta}', font=('Lucida Console',11), bg='#212121', fg='#00ff1e').pack()
+    ttk.Label(telaConfirma, text=f'Confirme o nome da pasta: {pasta}', style='Dark.TLabel').pack()
     painel2 = Frame(telaConfirma, background='#212121')
     painel2.pack(padx=15, pady=10)
-    btt1 = Button(painel2, text='Sim', command=cria_pasta)
-    btt1.pack(side=LEFT, padx=10)
-    btt2 = Button(painel2, text='Não', command=telaConfirma.destroy)
-    btt2.pack(side=LEFT, padx=10)
+    Button(painel2, text='Sim', command=cria_pasta).pack(side=LEFT, padx=10)
+    Button(painel2, text='Não', command=telaConfirma.destroy).pack(side=LEFT, padx=10)
 
 def caminho_pasta():
     global pasta
@@ -40,19 +41,19 @@ def cria_pasta():
     try: 
         os.mkdir(pasta)
         flag = 0
-        subpastas()
+        janela_subpastas()
     except:
         flag = 1
     if flag == 1:
         if pasta == '':
-            msgErro = Label(janelaInicial, text='Digite o nome da pasta', font=('Lucida Console',11), bg='#212121', fg='red', padx=5, pady=5)
+            msgErro = ttk.Label(janelaInicial, text='Digite o nome da pasta', style='ERROR.TLabel')
             msgErro.pack()
         else:
-            msgErro = Label(janelaInicial, text='Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|', font=('Lucida Console',11), bg='#212121', fg='red', padx=5, pady=5)
-            msgErro.pack()
+            msgErro = ttk.Label(janelaInicial, text='Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|', style='ERROR.TLabel')
+            msgErro.pack(padx=5, pady=5)
 
 
-def subpastas():
+def janela_subpastas():
     janelaSubpastas = Tk()
     janelaSubpastas.title('DirOrgan') #Define o nome da janela
     janelaSubpastas.config(background='#212121') #Define cor de fundo
@@ -61,12 +62,15 @@ def subpastas():
 janelaInicial = Tk()
 janelaInicial.config(background='#212121') #Define cor de fundo
 janelaInicial.title('DirOrgan') #Define o nome da janela
+style = ttk.Style()
+style.configure('Dark.TLabel', font=('Lucida Console', 11), background='#212121', foreground='#00ff1e')
+style.configure('ERROR.TLabel', font=('Lucida Console', 11), background='#212121', foreground='red', justify=CENTER)
 
-Label(janelaInicial, text='Bem vindo ao DirOrgan', font=('Lucida Console',13), bg='#212121', fg='#00ff1e', padx=20, pady=20).pack() #Msg de boas vindas
-Label(janelaInicial, text='Selecione o local de criação da nova pasta', font=('Lucida Console',11), bg='#212121', fg='#00ff1e', padx=5, pady=5).pack() #Msg Instruções
+ttk.Label(janelaInicial, text='Bem vindo ao DirOrgan', style="Dark.TLabel").pack(pady=15) #Msg de boas vindas
+ttk.Label(janelaInicial, text='Selecione o local de criação da nova pasta', style="Dark.TLabel").pack(pady=6) #Msg Instruções
 painel = Frame(janelaInicial, bg='#212121') 
-painel.pack(padx=15, pady=10)
-Label(painel, text='Nome da pasta: ', font=('Lucida Console',11), bg='#212121', fg='#00ff1e', padx=5, pady=5).pack(side=LEFT)
+painel.pack(padx=10, pady=10)
+ttk.Label(painel, text='Nome da pasta:', style='Dark.TLabel').pack(side=LEFT)
 entrada = Entry(painel, width=30, borderwidth=1, relief=SUNKEN)
 entrada.pack(side=LEFT, pady=5)
 Button(painel, text='Procurar', command=caminho_pasta).pack(side=LEFT, padx=10)

@@ -101,6 +101,7 @@ def janela_subpastas():
     entrada2.pack(side=LEFT, pady=5)
     Button(painel2, text='Nova pasta', command=cria_subpasta).pack(side=LEFT, padx=10)
 
+# Janela inicial principal do programa
 janelaInicial = Tk()
 janelaInicial.config(background='#212121') #Define cor de fundo
 janelaInicial.title('DirOrgan') #Define o nome da janela
@@ -115,7 +116,7 @@ ttk.Label(janelaInicial, text='Selecione o local de criação da nova pasta', st
 painel = Frame(janelaInicial, bg='#212121') 
 painel.pack(padx=10, pady=10)
 ttk.Label(painel, text='Nome da pasta:', style='Dark.TLabel').pack(side=LEFT)
-entrada = Entry(painel, width=30, borderwidth=1, relief=SUNKEN) #Esoaço para usuário inserir o nome da pasta do seu projeto
+entrada = Entry(painel, width=30, borderwidth=1, relief=SUNKEN) #Espaço para usuário inserir o nome da pasta do seu projeto
 entrada.pack(side=LEFT, pady=5)
 Button(painel, text='Procurar', command=caminho_pasta).pack(side=LEFT, padx=10)
 

@@ -60,11 +60,14 @@ def cria_pasta():
             msgErro = ttk.Label(erro02, text='Os nomes de arquivo não podem conter nenhum dos seguintes caracteres:\n /\?:*<>|', style='ERROR.TLabel')
             Button(erro02, text='OK', command=erro02.destroy).pack(pady=10, side=BOTTOM)
             msgErro.pack(padx=5, pady=5)
-
+    
 def cria_subpasta():
     subpasta = entrada2.get()
     try:
         os.mkdir(subpasta)
+        lista_subpastas.append(entrada2.get())
+        print(lista_subpastas)
+        ttk.Label(janelaSubpastas, text=f'Subpasta {subpasta} criada.', style='Dark.TLabel').pack(pady=3, side=BOTTOM)
     except:
         if subpasta == '':
             erro01 = Toplevel()
@@ -81,8 +84,10 @@ def cria_subpasta():
             Button(erro02, text='OK', command=erro02.destroy).pack(pady=10, side=BOTTOM)
             msgErro.pack(padx=5, pady=5)
 
+
 def janela_subpastas():
     global entrada2
+    global janelaSubpastas
     janelaInicial.destroy()
     janelaSubpastas = Tk()
     janelaSubpastas.title('DirOrgan') #Define o nome da janela
@@ -100,6 +105,9 @@ def janela_subpastas():
     entrada2 = Entry(painel2, width=30, relief=SUNKEN)
     entrada2.pack(side=LEFT, pady=5)
     Button(painel2, text='Nova pasta', command=cria_subpasta).pack(side=LEFT, padx=10)
+
+#Variáveis globais:
+lista_subpastas = []
 
 # Janela inicial principal do programa
 janelaInicial = Tk()
